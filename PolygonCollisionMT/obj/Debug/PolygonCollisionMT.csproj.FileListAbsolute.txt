@@ -1,0 +1,9 @@
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.exe.config
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.exe
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.pdb
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.csprojResolveAssemblyReference.cache
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.Properties.Resources.resources
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.csproj.GenerateResource.Cache
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.exe
+c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.pdb
+C:\Users\Szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.Form1.resources

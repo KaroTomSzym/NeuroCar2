@@ -14,13 +14,15 @@ namespace PolygonCollisionMT
     {
         Graphics canvas;
         PolygonManager PolygonMng;
-
+        Car car;
 
         public Form1()
         {
             InitializeComponent();
             canvas = splitContainer1.Panel2.CreateGraphics();
             PolygonMng = new PolygonManager();
+            car = new Car();
+            PolygonMng.addPolygon(car.carShape);
         }
 
         private void button1_Click(object sender, EventArgs e)

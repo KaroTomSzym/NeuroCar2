@@ -7,3 +7,12 @@ c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\Polygon
 c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.exe
 c:\users\szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.pdb
 C:\Users\Szymon\documents\visual studio 2013\Projects\PolygonCollisionMT\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.Form1.resources
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.exe.config
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.exe
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.pdb
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.exe
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.pdb
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.csprojResolveAssemblyReference.cache
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.Form1.resources
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.Properties.Resources.resources
+C:\Users\Tomasz Kryg\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.csproj.GenerateResource.Cache

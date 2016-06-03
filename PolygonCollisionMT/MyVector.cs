@@ -25,6 +25,13 @@ namespace PolygonCollisionMT
             _vector = new List<double>();
         }
 
+        public MyVector(double x, double y)
+        {
+            _vector = new List<double>();
+            _vector.Add(x);
+            _vector.Add(y);
+        }
+
         public MyVector(List<double> vec)
         {
             _vector = vec;
@@ -59,7 +66,7 @@ namespace PolygonCollisionMT
 
         public Point getPoint()
         {
-            if(_vector.Count != 2)
+            if (_vector.Count != 2)
                 throw new Exception();
 
             Point p = new Point((int)_vector[0], (int)_vector[1]);
@@ -77,11 +84,11 @@ namespace PolygonCollisionMT
             {
                 this._vector[index] = value;
             }
-            
+
         }
 
         //l1 != l2 exception
-        public static MyVector operator+(MyVector v1, MyVector v2)
+        public static MyVector operator +(MyVector v1, MyVector v2)
         {
             MyVector result = new MyVector();
             for (int i = 0; i < v1.Length; i++)

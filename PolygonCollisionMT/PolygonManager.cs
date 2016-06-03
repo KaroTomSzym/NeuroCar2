@@ -25,9 +25,9 @@ namespace PolygonCollisionMT
         {
             List<Point[]> polygonsPointsList = new List<Point[]>();
             foreach (Polygon p in _polygons)
-	        {
+            {
                 polygonsPointsList.Add(p.getPointsTable());
-	        }
+            }
             return polygonsPointsList;
         }
 

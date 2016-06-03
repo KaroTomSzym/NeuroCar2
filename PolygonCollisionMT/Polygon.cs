@@ -12,6 +12,13 @@ namespace PolygonCollisionMT
         protected PointVector _points;
         protected MyVector _velocity;
         protected double _angularVelocity;
+        protected virtual PointVector _polarCoordinates
+        {
+            get
+            {
+                return _polarCoordinates;
+            }
+        }
 
         public virtual double mass
         {
@@ -30,7 +37,7 @@ namespace PolygonCollisionMT
 
         public abstract Point[] getPointsTable();
         public abstract void shift();
-
+        public abstract void rotate();
 
     }
 }

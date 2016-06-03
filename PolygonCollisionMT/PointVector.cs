@@ -32,7 +32,7 @@ namespace PolygonCollisionMT
             get
             {
                 MyVector tempMv = new MyVector();
-                for(int i = 0 ; i < PointDimension ; i ++)
+                for (int i = 0; i < PointDimension; i++)
                 {
                     tempMv.Add(0);
                 }
@@ -73,7 +73,7 @@ namespace PolygonCollisionMT
             return pt;
         }
 
-        public static PointVector operator+(PointVector pv, MyVector mv)
+        public static PointVector operator +(PointVector pv, MyVector mv)
         {
             if (pv.PointDimension != mv.Length)
                 throw new Exception();
@@ -92,6 +92,48 @@ namespace PolygonCollisionMT
 
             return tempPv;
 
+        }
+
+        public static PointVector operator -(PointVector pv, MyVector mv)
+        {
+            if (pv.PointDimension != mv.Length)
+                throw new Exception();
+
+            PointVector tempPv = new PointVector();
+
+            for (int i = 0; i < pv.Length; i++)
+            {
+                MyVector tempMv = new MyVector();
+                for (int j = 0; j < pv.PointDimension; j++)
+                {
+                    tempMv.Add(pv[i][j] - mv[j]);
+                }
+                tempPv.Add(tempMv);
+            }
+
+            return tempPv;
+
+        }
+
+        private PointVector polarRepresentation(MyVector centre)
+        {
+            PointVector coordsRelativeToCenter = this - centre;
+            PointVector polarCoords = new PointVector();
+            for (int i = 0; i < this.Length; i++)
+            {
+                polarCoords.Add(MyMath.polarRepresentation(coordsRelativeToCenter[i]));
+            }
+            return polarCoords;
+        }
+
+        public PointVector rotate(double angle, MyVector rotationCenter)
+        {
+            PointVector polarRepresentation = this.polarRepresentation(rotationCenter);
+            for (int i = 0; i < polarRepresentation.Length; i++)
+            {
+                polarRepresentation[i][1] += angle;
+            }
+            return this; // tu skończylem - trzeba zaimplementować cartesianRepresentation i zwrócić wynik + obracać punkty w trójkącie;
         }
 
     }

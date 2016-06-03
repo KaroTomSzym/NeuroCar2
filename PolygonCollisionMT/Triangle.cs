@@ -7,17 +7,29 @@ using System.Drawing;
 
 namespace PolygonCollisionMT
 {
-    public class Triangle: Polygon
+    public class Triangle : Polygon
     {
 
-        public override MyVector MassCentre 
-        { 
-            get 
+        public override MyVector MassCentre
+        {
+            get
             {
                 return _points.GeometricCentre;
-            } 
+            }
         }
-
+        protected override PointVector _polarCoordinates
+        {
+            get
+            {
+                PointVector coordsRelativeToMassCenter = _points - MassCentre;
+                PointVector polarCoords = new PointVector();
+                for (int i = 0; i < _points.Length; i++)
+                {
+                    polarCoords.Add(MyMath.polarRepresentation(coordsRelativeToMassCenter[i]));
+                }
+                return polarCoords;
+            }
+        }
         public Triangle(PointVector pv, MyVector velocity)
         {
             this._points = pv;
@@ -42,5 +54,9 @@ namespace PolygonCollisionMT
             _points = _points + _velocity;
         }
 
+        public override void rotate()
+        {
+
+        }
     }
 }

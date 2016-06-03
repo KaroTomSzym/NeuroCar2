@@ -50,6 +50,14 @@ namespace PolygonCollisionMT
             _points = new List<MyVector>();
         }
 
+        public PointVector(MyVector a, MyVector b, MyVector c)
+        {
+            _points = new List<MyVector>();
+            _points.Add(a);
+            _points.Add(b);
+            _points.Add(c);
+        }
+
         public MyVector this[int index]
         {
             get
@@ -71,6 +79,42 @@ namespace PolygonCollisionMT
                 pt[i] = _points[i].getPoint();
             }
             return pt;
+        }
+
+        public MyVector maxCoordinatePoint(int dimensionIndex)
+        {
+            if (dimensionIndex >= PointDimension)
+                throw new IndexOutOfRangeException();
+
+            double max = _points[0][dimensionIndex];
+            int index = 0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (max < _points[i][dimensionIndex])
+                {
+                    max = _points[i][dimensionIndex];
+                    index = i;
+                }
+            }
+            return _points[index];
+        }
+
+        public MyVector minCoordinatePoint(int dimensionIndex)
+        {
+            if (dimensionIndex >= PointDimension)
+                throw new IndexOutOfRangeException();
+
+            double min = _points[0][dimensionIndex];
+            int index = 0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (min > _points[i][dimensionIndex])
+                {
+                    min = _points[i][dimensionIndex];
+                    index = i;
+                }
+            }
+            return _points[index];
         }
 
         public static PointVector operator +(PointVector pv, MyVector mv)
@@ -126,14 +170,23 @@ namespace PolygonCollisionMT
             return polarCoords;
         }
 
-        public PointVector rotate(double angle, MyVector rotationCenter)
+        public PointVector rotate(double angle, MyVector rotationCentre)
         {
-            PointVector polarRepresentation = this.polarRepresentation(rotationCenter);
+            PointVector polarRepresentation = this.polarRepresentation(rotationCentre);
             for (int i = 0; i < polarRepresentation.Length; i++)
             {
                 polarRepresentation[i][1] += angle;
+                polarRepresentation[i][1] %= 2 * Math.PI;
             }
-            return this; // tu skończylem - trzeba zaimplementować cartesianRepresentation i zwrócić wynik + obracać punkty w trójkącie;
+
+            PointVector cartesianRepresentation = new PointVector();
+            for (int i = 0; i < polarRepresentation.Length; i++)
+            {
+                MyVector cartesianPoint = MyMath.cartesianRepresentation(polarRepresentation[i], rotationCentre);
+                cartesianRepresentation.Add(cartesianPoint);
+            }
+
+            return cartesianRepresentation;
         }
 
     }

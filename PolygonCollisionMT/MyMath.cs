@@ -10,7 +10,7 @@ namespace PolygonCollisionMT
     {
         public static MyVector polarRepresentation(MyVector vector)
         {
-            double norm = vector.Length;
+            double norm = vector.norm();
             double angle;
             MyVector normalVec = vector.normalVector();
 
@@ -25,6 +25,13 @@ namespace PolygonCollisionMT
 
             MyVector polarForm = new MyVector(norm, angle);
             return polarForm;
+        }
+        public static MyVector cartesianRepresentation(MyVector polarFormVector, MyVector centrePoint)
+        {
+            MyVector cartesianPoint = new MyVector(Math.Sin(polarFormVector[1]), Math.Cos(polarFormVector[1]));
+            cartesianPoint = cartesianPoint * polarFormVector[0];
+            cartesianPoint = cartesianPoint + centrePoint;
+            return cartesianPoint;
         }
         public static double triangleSurface(PointVector triangleVertices)
         {
@@ -43,7 +50,27 @@ namespace PolygonCollisionMT
 
             return surface;
         }
+        public static double splitedTriangleSurface(PointVector triangle, MyVector splitPoint)
+        {
+            if (triangle.Length != 3 || triangle.PointDimension != 2 || splitPoint.Length != 2)
+            {
+                throw new Exception();
+            }
+            MyVector vertexA = triangle[0];
+            MyVector vertexB = triangle[1];
+            MyVector vertexC = triangle[2];
 
+            PointVector triangleABS = new PointVector(vertexA, vertexB,splitPoint);
+            PointVector triangleBCS = new PointVector(vertexC, vertexB, splitPoint);
+            PointVector triangleCAS = new PointVector(vertexA, vertexC, splitPoint);
+
+            double surfaceSum = 0;
+            surfaceSum += triangleSurface(triangleABS);
+            surfaceSum += triangleSurface(triangleBCS);
+            surfaceSum += triangleSurface(triangleCAS);
+
+            return surfaceSum;
+        }
 
     }
 }

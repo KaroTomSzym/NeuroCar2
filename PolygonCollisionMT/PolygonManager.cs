@@ -10,10 +10,13 @@ namespace PolygonCollisionMT
     public class PolygonManager
     {
         private List<Polygon> _polygons;
-
-        public PolygonManager()
+        private int _boundaryX;
+        private int _boundaryY;
+        public PolygonManager(int boundaryX, int boundaryY)
         {
             _polygons = new List<Polygon>();
+            _boundaryX = boundaryX;
+            _boundaryY = boundaryY;
         }
 
         public void addPolygon(Polygon p)
@@ -33,10 +36,29 @@ namespace PolygonCollisionMT
 
         public void movePolygons()
         {
+            checkCollisions();
             foreach (Polygon p in _polygons)
             {
                 p.shift();
+                p.rotate();
             }
+        }
+
+        public void checkCollisions()
+        {
+            List<Polygon> polygonsToRemove = new List<Polygon>();
+            foreach (Polygon p in _polygons)
+            {
+                //boundary collison zwraca punkt (-1,0) jeśli brak kolizji
+                if (p.boundaryCollison(0, _boundaryX, 0, _boundaryY)[0] != -1)
+                {
+                    polygonsToRemove.Add(p);
+                }
+            }
+            foreach (Polygon p in polygonsToRemove)
+	        {
+                _polygons.Remove(p);
+	        }
         }
     }
 }

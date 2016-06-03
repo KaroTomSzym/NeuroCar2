@@ -12,19 +12,12 @@ namespace PolygonCollisionMT
         protected PointVector _points;
         protected MyVector _velocity;
         protected double _angularVelocity;
-        protected virtual PointVector _polarCoordinates
-        {
-            get
-            {
-                return _polarCoordinates;
-            }
-        }
 
-        public virtual double mass
+        public virtual double Mass
         {
             get
             {
-                return mass;
+                return Mass;
             }
         }
         public virtual MyVector MassCentre
@@ -39,5 +32,9 @@ namespace PolygonCollisionMT
         public abstract void shift();
         public abstract void rotate();
 
+        //Jeśli brak kolizji to zwróci (-1,?)
+        public abstract MyVector boundaryCollison(double minX, double maxX, double minY, double maxY);
+
+        public abstract bool isPointInside(MyVector point);
     }
 }

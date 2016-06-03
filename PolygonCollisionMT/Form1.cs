@@ -20,7 +20,9 @@ namespace PolygonCollisionMT
         {
             InitializeComponent();
             canvas = splitContainer1.Panel2.CreateGraphics();
-            PolygonMng = new PolygonManager();
+            int boundaryX = splitContainer1.Panel2.Width;
+            int boundaryY = splitContainer1.Panel2.Height;
+            PolygonMng = new PolygonManager(boundaryX, boundaryY);
         }
 
         private void button1_Click(object sender, EventArgs e)

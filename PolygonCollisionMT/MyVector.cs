@@ -98,5 +98,15 @@ namespace PolygonCollisionMT
             return result;
         }
 
+        public static MyVector operator *(MyVector v1, double k)
+        {
+            MyVector result = new MyVector();
+            for (int i = 0; i < v1.Length; i++)
+            {
+                result.Add(v1[i] * k);
+            }
+            return result;
+        }
+
     }
 }

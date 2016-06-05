@@ -50,6 +50,27 @@ namespace PolygonCollisionMT
             _points = new List<MyVector>();
         }
 
+        public PointVector(double x1, double y1, double x2, double y2, double x3, double y3)
+        {
+            _points = new List<MyVector>();
+            MyVector mv1 = new MyVector();
+
+            mv1.Add(x1);
+            mv1.Add(y1);
+
+            MyVector mv2 = new MyVector();
+            mv2.Add(x2);
+            mv2.Add(y2);
+
+            MyVector mv3 = new MyVector();
+            mv3.Add(x3);
+            mv3.Add(y3);
+
+            _points.Add(mv1);
+            _points.Add(mv2);
+            _points.Add(mv3);
+        }
+
         public MyVector this[int index]
         {
             get

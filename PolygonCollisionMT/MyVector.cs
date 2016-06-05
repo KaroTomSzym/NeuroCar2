@@ -25,6 +25,13 @@ namespace PolygonCollisionMT
             _vector = new List<double>();
         }
 
+        public MyVector(double x, double y)
+        {
+            _vector = new List<double>();
+            _vector.Add(x);
+            _vector.Add(y);
+        }
+
         public MyVector(List<double> vec)
         {
             _vector = vec;

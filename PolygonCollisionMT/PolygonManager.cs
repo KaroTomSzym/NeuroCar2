@@ -31,6 +31,11 @@ namespace PolygonCollisionMT
             return polygonsPointsList;
         }
 
+        public void setPolygonsList(List<Polygon> visiblePolygonsList)
+        {
+            _polygons = visiblePolygonsList;
+        }
+
         public void movePolygons()
         {
             foreach (Polygon p in _polygons)

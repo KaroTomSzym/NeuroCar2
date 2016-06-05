@@ -14,15 +14,18 @@ namespace PolygonCollisionMT
     {
         Graphics canvas;
         PolygonManager PolygonMng;
-        Car car;
+        //Car car;
+        Road road;
+        int roadLength = 2000;
 
         public Form1()
         {
             InitializeComponent();
             canvas = splitContainer1.Panel2.CreateGraphics();
             PolygonMng = new PolygonManager();
-            car = new Car();
-            PolygonMng.addPolygon(car.carShape);
+            //car = new Car();
+            road = new Road(roadLength);
+            //PolygonMng.addPolygon(car.carShape);
 
         }
 
@@ -38,35 +41,29 @@ namespace PolygonCollisionMT
 
         private void button2_Click(object sender, EventArgs e)
         {
-            PointVector pv = new PointVector();
-
-            MyVector mv1 = new MyVector();
-            mv1.Add((double)numericUpDown1.Value);
-            mv1.Add((double)numericUpDown2.Value);
-
-            MyVector mv2 = new MyVector();
-            mv2.Add((double)numericUpDown3.Value);
-            mv2.Add((double)numericUpDown4.Value);
-
-            MyVector mv3 = new MyVector();
-            mv3.Add((double)numericUpDown3.Value);
-            mv3.Add((double)numericUpDown3.Value);
-
-            pv.Add(mv1);
-            pv.Add(mv2);
-            pv.Add(mv3);
-
-            MyVector velocity = new MyVector();
-            velocity.Add(1);
-            velocity.Add(2);
-
-
-            PolygonMng.addPolygon(new Triangle(pv, velocity));
+            PointVector pv = new PointVector((double)numericUpDown1.Value, (double)numericUpDown2.Value, (double)numericUpDown3.Value, (double)numericUpDown4.Value, (double)numericUpDown3.Value, (double)numericUpDown3.Value);
+            MyVector velocity = new MyVector(0, 0);
+            Triangle triangle = new Triangle(pv, velocity);
+            PolygonMng.addPolygon(triangle);
+            //road.addPolygon(triangle);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             PolygonMng.movePolygons();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            road.VisibleArea.CurrentAreaPosition += 5;
+            PolygonMng.setPolygonsList(road.getVisiblePolygons());
+            //button3_Click(sender, e);
+            //button1_Click(sender, e);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

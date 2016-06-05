@@ -27,12 +27,7 @@ namespace PolygonCollisionMT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            List<Point[]> polygonsToDraw = PolygonMng.getPolygonsPointsList();
-
-            foreach (Point[] p in polygonsToDraw)
-	        {
-		        canvas.DrawLines(new Pen(Color.Red), p );
-	        }            
+                    
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -66,6 +61,18 @@ namespace PolygonCollisionMT
         private void button3_Click(object sender, EventArgs e)
         {
             PolygonMng.movePolygons();
+        }
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+            List<Point[]> polygonsToDraw = PolygonMng.getPolygonsPointsList();
+            canvas.Clear(Color.White);
+            foreach (Point[] p in polygonsToDraw)
+            {
+                canvas.DrawLines(new Pen(Color.Red), p);
+            }    
         }
     }
 }

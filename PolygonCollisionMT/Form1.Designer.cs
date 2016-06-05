@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.button3 = new System.Windows.Forms.Button();
             this.numericUpDown6 = new System.Windows.Forms.NumericUpDown();
@@ -38,6 +39,7 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -202,6 +204,12 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 30;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -235,6 +243,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.NumericUpDown numericUpDown4;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

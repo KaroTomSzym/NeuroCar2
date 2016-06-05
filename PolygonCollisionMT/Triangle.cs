@@ -26,6 +26,14 @@ namespace PolygonCollisionMT
             }
         }
 
+        public override int VerticesNumber
+        {
+            get
+            {
+                return _points.Length;
+            }
+        }
+
         public Triangle(PointVector pv, MyVector velocity)
         {
             this._points = pv;
@@ -96,6 +104,40 @@ namespace PolygonCollisionMT
             else
                 return true;
 
+        }
+
+        public override MyVector polygonCollision(Polygon polygon)
+        {
+
+            bool maxXBoundaryInside = polygon.maxCoordinatePoint(0)[0] > this.minCoordinatePoint(0)[0]
+                && polygon.maxCoordinatePoint(0)[0] < this.maxCoordinatePoint(0)[0];
+            bool maxYBoundaryInside = polygon.maxCoordinatePoint(1)[1] > this.minCoordinatePoint(1)[1]
+                && polygon.maxCoordinatePoint(1)[1] < this.maxCoordinatePoint(1)[1];
+            bool minXBoundaryInside = polygon.minCoordinatePoint(0)[0] > this.minCoordinatePoint(0)[0]
+                && polygon.minCoordinatePoint(0)[0] < this.maxCoordinatePoint(0)[0];
+            bool minYBoundaryInside = polygon.minCoordinatePoint(1)[1] > this.minCoordinatePoint(1)[1]
+                && polygon.minCoordinatePoint(1)[1] < this.maxCoordinatePoint(1)[1];
+            bool isWholeXInside = polygon.minCoordinatePoint(0)[0] < this.minCoordinatePoint(0)[0]
+                && polygon.maxCoordinatePoint(0)[0] > this.maxCoordinatePoint(0)[0];
+            bool isWholeYInside = polygon.minCoordinatePoint(1)[1] < this.minCoordinatePoint(1)[1]
+                && polygon.maxCoordinatePoint(1)[1] > this.maxCoordinatePoint(1)[1];
+
+            bool boundsIntersection = maxXBoundaryInside || maxYBoundaryInside || minXBoundaryInside
+                || minYBoundaryInside || isWholeXInside || isWholeYInside;
+
+            if (boundsIntersection)
+            {
+                for (int i = 0; i < polygon.VerticesNumber; i++)
+                {
+                    if (isPointInside(polygon[i]))
+                    {
+                        return polygon[i];
+                    }                
+                }
+            }
+            
+            MyVector noCollison = new MyVector(-1, -1);
+            return noCollison;
         }
     }
 }

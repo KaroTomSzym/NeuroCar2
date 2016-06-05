@@ -27,14 +27,42 @@ namespace PolygonCollisionMT
                 return MassCentre;
             }
         }
+        public virtual MyVector this[int index]
+        {
+            get
+            {
+                if(index > _points.Length)
+                    throw new IndexOutOfRangeException();
+
+                return _points[index];
+            }
+        }
+        public virtual int VerticesNumber
+        {
+            get
+            {
+                return VerticesNumber;
+            }
+        }
+        public virtual MyVector maxCoordinatePoint(int dimensionIndex)
+        {
+            return _points.maxCoordinatePoint(dimensionIndex);
+        }
+        public virtual MyVector minCoordinatePoint(int dimensionIndex)
+        {
+            return _points.minCoordinatePoint(dimensionIndex);
+        }
 
         public abstract Point[] getPointsTable();
         public abstract void shift();
         public abstract void rotate();
 
+        public abstract bool isPointInside(MyVector point);
+
         //Jeśli brak kolizji to zwróci (-1,?)
         public abstract MyVector boundaryCollison(double minX, double maxX, double minY, double maxY);
-
-        public abstract bool isPointInside(MyVector point);
+        public abstract MyVector polygonCollision(Polygon polygon);
+        
+        
     }
 }

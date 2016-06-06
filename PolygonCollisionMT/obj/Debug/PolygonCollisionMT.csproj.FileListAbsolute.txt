@@ -15,3 +15,4 @@ C:\Users\Szymon\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonC
 C:\Users\Szymon\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.csproj.GenerateResource.Cache
 C:\Users\Szymon\Documents\GitHub\NeuroCar2\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.exe
 C:\Users\Szymon\Documents\GitHub\NeuroCar2\PolygonCollisionMT\bin\Debug\PolygonCollisionMT.pdb
+C:\Users\Szymon\Documents\GitHub\NeuroCar2\PolygonCollisionMT\obj\Debug\PolygonCollisionMT.csprojResolveAssemblyReference.cache

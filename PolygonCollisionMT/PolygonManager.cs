@@ -15,13 +15,21 @@ namespace PolygonCollisionMT
         private int _boundaryY;
         private Thread PolygonManagerThread;
         private bool running;
-        public PolygonManager(int boundaryX, int boundaryY)
+        public Polygon carPolygon;
+        //
+        public MyVector lastForce;
+        //
+        public PolygonManager(int boundaryX, int boundaryY,Polygon car)
         {
             _polygons = new List<Polygon>();
             _boundaryX = boundaryX;
             _boundaryY = boundaryY;
             startThread();
             running = true;
+            //
+            carPolygon = car;
+            lastForce = new MyVector(0,0);
+            //
         }
 
         public void threadAction(object data)
@@ -31,7 +39,7 @@ namespace PolygonCollisionMT
                 if (running)
                 movePolygons();
 
-                Thread.Sleep(50);
+                Thread.Sleep(10);
             }
         }
 
@@ -61,6 +69,7 @@ namespace PolygonCollisionMT
                 {
                     polygonsPointsList.Add(p.getPointsTable());
                 }
+                polygonsPointsList.Add(carPolygon.getPointsTable());
             }
             catch (InvalidOperationException)
             {
@@ -73,8 +82,8 @@ namespace PolygonCollisionMT
         public void movePolygons()
         {
             
-            checkCollisions();
-
+            checkBoundaryCollisions();
+            checkObstacleCollison();
             try
             {
                 foreach (Polygon p in _polygons)
@@ -82,7 +91,8 @@ namespace PolygonCollisionMT
                     p.shift();
                     p.rotate();
                 }
-                running = true;
+                carPolygon.shift();
+                carPolygon.rotate();
             } 
             catch(InvalidOperationException){
 
@@ -90,25 +100,82 @@ namespace PolygonCollisionMT
             
         }
 
-        public void checkCollisions()
+        public void checkObstacleCollison()
         {
-            List<Polygon> polygonsToRemove = new List<Polygon>();
             foreach (Polygon p in _polygons)
             {
-                //boundary collison zwraca punkt (-1,0) jeśli brak kolizji
-                if (p.boundaryCollison(0, _boundaryX, 0, _boundaryY)[0] != -1)
+                MyVector contactPoint = carPolygon.polygonCollision(p);
+                if (contactPoint[0] != -1)
                 {
-                    polygonsToRemove.Add(p);
-                    
+                    MyVector massCentre = carPolygon.MassCentre - p.MassCentre;
+                    MyVector force = carPolygon.getForceVector(contactPoint);
+                    Double forceValue = MyMath.normVector(force);
+                    force =  MyMath.normalizeVector(force+massCentre) * forceValue;
+                    carPolygon.actForce(contactPoint, force);
+                }
+                else
+                {
+                    MyVector contactPoint2 = p.polygonCollision(carPolygon);
+                    if (contactPoint2[0] != -1)
+                    {
+                        MyVector massCentre = carPolygon.MassCentre - p.MassCentre;
+                        MyVector force = carPolygon.getForceVector(contactPoint2);
+                        Double forceValue = MyMath.normVector(force);
+                        force = MyMath.normalizeVector(force + massCentre) * forceValue;
+                        carPolygon.actForce(contactPoint2, force);
+                    }
                 }
             }
-            if (polygonsToRemove.Count > 0)
+        }
+
+        public void checkBoundaryCollisions()
+        {
+
+            MyVector contactPoint = carPolygon.boundaryCollison(0, _boundaryX, 0, _boundaryY);
+            //boundary collison zwraca punkt (-1,0) jeśli brak kolizji
+            if (contactPoint[0] != -1)
             {
-                foreach (Polygon p in polygonsToRemove)
+                //x=0 lub x = max
+                if (contactPoint[0] < 0 || contactPoint[0] > _boundaryX)
                 {
-                    _polygons.Remove(p);
-                }                      
-            }         
+                    MyVector force = carPolygon.getForceVector(contactPoint);
+                    force[0] *= -1;
+                    carPolygon.actForce(contactPoint, force);
+                    lastForce = force;
+                }
+                //y=0 lub y = max
+                if (contactPoint[1] < 0 || contactPoint[1] > _boundaryY)
+                {
+                    MyVector force = carPolygon.getForceVector(contactPoint);
+                    force[1] *= -1;
+                    carPolygon.actForce(contactPoint, force);
+                    lastForce = force;
+                }
+            }
+            //foreach (Polygon p in _polygons)
+            //{
+            //    MyVector contactPoint = p.boundaryCollison(0, _boundaryX, 0, _boundaryY);
+            //    //boundary collison zwraca punkt (-1,0) jeśli brak kolizji
+            //    if (contactPoint[0] != -1)
+            //    {
+            //        //x=0 lub x = max
+            //        if (contactPoint[0] < 0 || contactPoint[0] > _boundaryX)
+            //        {
+            //            MyVector force = p.getForceVector(contactPoint);
+            //            force[0] *= -1;
+            //            p.actForce(contactPoint, force);
+            //            lastForce = force;
+            //        }
+            //        //y=0 lub y = max
+            //        if (contactPoint[1] < 0 || contactPoint[1] > _boundaryY)
+            //        {
+            //            MyVector force = p.getForceVector(contactPoint);
+            //            force[1] *= -1;
+            //            p.actForce(contactPoint, force);
+            //            lastForce = force;
+            //        }
+            //    }
+            //}        
         }
     }
 }

@@ -33,6 +33,46 @@ namespace PolygonCollisionMT
             cartesianPoint = cartesianPoint + centrePoint;
             return cartesianPoint;
         }
+        public static MyVector normalVector(MyVector vector)
+        {
+            if (vector.Length != 2)
+                throw new Exception();
+
+            MyVector normalVec = new MyVector(-vector[1], vector[0]);
+            return normalVec;
+        }
+        public static double normVector(MyVector vector)
+        {
+            double sum = 0;
+            for (int i = 0; i < vector.Length; i++)
+            {
+                sum += vector[i] * vector[i];
+            }
+            sum = Math.Sqrt(sum);
+            return sum;
+        }
+        public static MyVector normalizeVector(MyVector vector)
+        {
+            MyVector normalized = vector * (1 / MyMath.normVector(vector));
+            return normalized;
+        }
+        public static double dotProduct(MyVector vector1, MyVector vector2)
+        {
+            double sum = 0;
+            for (int i = 0; i < vector1.Length; i++)
+            {
+                sum += vector1[i] * vector2[i];
+            }
+            return sum;
+        }
+        public static MyVector vectorProjection(MyVector baseVector, MyVector vector)
+        {
+            MyVector unitBaseVector = MyMath.normalizeVector(baseVector);
+            double projectionLength = dotProduct(unitBaseVector, vector);
+
+            MyVector projectionVector = unitBaseVector * projectionLength;
+            return projectionVector;
+        }
         public static double triangleSurface(PointVector triangleVertices)
         {
             if (triangleVertices.Length != 3 || triangleVertices.PointDimension != 2)
@@ -71,6 +111,14 @@ namespace PolygonCollisionMT
 
             return surfaceSum;
         }
-
+        public static double orientationBetweenVectors(MyVector vector1, MyVector vector2)
+        {
+            MyVector normalVec = normalVector(vector1);
+            double angle = dotProduct(normalVec, vector2);
+            //angle = angle/(normVector(vector1)*normVector(vector2));
+            //angle = Math.Acos(angle)-Math.PI/2;
+            
+            return angle;
+        }
     }
 }

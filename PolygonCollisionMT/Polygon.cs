@@ -62,7 +62,11 @@ namespace PolygonCollisionMT
         //Jeśli brak kolizji to zwróci (-1,?)
         public abstract MyVector boundaryCollison(double minX, double maxX, double minY, double maxY);
         public abstract MyVector polygonCollision(Polygon polygon);
-        
-        
+
+        public abstract MyVector getForceVector(MyVector contactPoint);
+        public abstract void actForce(MyVector contactPoint, MyVector forceVector);
+
+
+        public abstract void forward(MyVector velocity);
     }
 }

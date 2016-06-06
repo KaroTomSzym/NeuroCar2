@@ -25,6 +25,15 @@ namespace PolygonCollisionMT
             _vector = new List<double>();
         }
 
+        public MyVector(MyVector vector)
+        {
+            _vector = new List<double>();
+            for (int i = 0; i < vector.Length; i++)
+            {
+                _vector.Add(vector[i]);
+            }
+        }
+
         public MyVector(double x, double y)
         {
             _vector = new List<double>();
@@ -98,6 +107,16 @@ namespace PolygonCollisionMT
             return result;
         }
 
+        public static MyVector operator -(MyVector v1, MyVector v2)
+        {
+            MyVector result = new MyVector();
+            for (int i = 0; i < v1.Length; i++)
+            {
+                result.Add(v1[i] - v2[i]);
+            }
+            return result;
+        }
+
         public static MyVector operator *(MyVector v1, double k)
         {
             MyVector result = new MyVector();
@@ -108,5 +127,15 @@ namespace PolygonCollisionMT
             return result;
         }
 
+        public override string ToString()
+        {
+            string s = "(";
+            for (int i = 0; i < Length-1; i++)
+            {
+                s += ((int)(this[i]*100))/100 + ", ";
+            }
+            s += ((int)(this[Length-1]*100))/100 + ")";
+            return s;
+        }
     }
 }

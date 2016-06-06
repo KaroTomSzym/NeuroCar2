@@ -22,7 +22,7 @@ namespace PolygonCollisionMT
         {
             get
             {
-                return MyMath.triangleSurface(_points);
+                return MyMath.triangleSurface(_points)*0.01;
             }
         }
 
@@ -38,7 +38,7 @@ namespace PolygonCollisionMT
         {
             this._points = pv;
             this._velocity = velocity;
-            this._angularVelocity = 0.1;
+            this._angularVelocity = 0.0;
         }
 
         public override Point[] getPointsTable()
@@ -62,15 +62,16 @@ namespace PolygonCollisionMT
         public override void rotate()
         {
             _points = _points.rotate(_angularVelocity, MassCentre);
+            _angularVelocity *= 0.9; //friction
         }
 
         public override MyVector boundaryCollison(double minX, double maxX, double minY, double maxY)
         {
 
-            MyVector minXPoint = _points.minCoordinatePoint(0);
-            MyVector maxXPoint = _points.maxCoordinatePoint(0);
-            MyVector minYPoint = _points.minCoordinatePoint(1);
-            MyVector maxYPoint = _points.maxCoordinatePoint(1);
+            MyVector minXPoint = _points.minCoordinatePoint(0) + _velocity;
+            MyVector maxXPoint = _points.maxCoordinatePoint(0) + _velocity;
+            MyVector minYPoint = _points.minCoordinatePoint(1) + _velocity;
+            MyVector maxYPoint = _points.maxCoordinatePoint(1) + _velocity;
 
             if (minX > minXPoint[0])
             {
@@ -86,7 +87,7 @@ namespace PolygonCollisionMT
             }
             if (maxY < maxYPoint[1])
             {
-                return minYPoint;
+                return maxYPoint;
             }
 
             MyVector noCollison = new MyVector(-1, 0);
@@ -97,12 +98,13 @@ namespace PolygonCollisionMT
         {
             double controlSurface = MyMath.triangleSurface(_points);
 
-            double splitedSurface = MyMath.splitedTriangleSurface(_points, point);
+            MyVector nextPoint = point + _velocity;
+            double splitedSurface = MyMath.splitedTriangleSurface(_points, nextPoint);
 
             if (controlSurface == splitedSurface)
-                return false;
-            else
                 return true;
+            else
+                return false;
 
         }
 
@@ -138,6 +140,42 @@ namespace PolygonCollisionMT
             
             MyVector noCollison = new MyVector(-1, -1);
             return noCollison;
+        }
+
+        public override MyVector getForceVector(MyVector contactPoint)
+        {
+            MyVector forceVector = new MyVector(_velocity);
+            MyVector massRadius = contactPoint - MassCentre;
+            MyVector angularVector = MyMath.normalVector(massRadius);
+            angularVector *= _angularVelocity;
+
+            forceVector = (forceVector + angularVector) * Mass;
+
+            return _velocity*Mass;
+        }
+
+        public override void actForce(MyVector contactPoint, MyVector forceVector)
+        {
+            MyVector massRadius = MassCentre - contactPoint;
+            MyVector rotationVec = MyMath.normalVector(massRadius);
+            double rotationRadius = MyMath.normVector(rotationVec)/100;
+
+            massRadius = MyMath.normalizeVector(massRadius);
+            rotationVec = MyMath.normalizeVector(rotationVec);
+
+            double rotationOrientation = Math.Sign(MyMath.orientationBetweenVectors(massRadius, _velocity));
+
+            _velocity = forceVector*(1/Mass);
+            _angularVelocity = rotationRadius*0.09 * MyMath.dotProduct(rotationVec, forceVector) / Mass;
+            _angularVelocity = Math.Abs(_angularVelocity);
+            _angularVelocity *= -rotationOrientation;
+            
+        }
+
+        public override void forward(MyVector velocity)
+        {
+            _velocity += velocity*10;
+            _points += velocity;
         }
     }
 }

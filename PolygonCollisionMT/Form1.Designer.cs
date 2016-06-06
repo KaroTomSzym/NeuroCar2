@@ -40,6 +40,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -59,6 +60,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.textBox1);
             this.splitContainer1.Panel1.Controls.Add(this.button3);
             this.splitContainer1.Panel1.Controls.Add(this.numericUpDown6);
             this.splitContainer1.Panel1.Controls.Add(this.numericUpDown5);
@@ -68,8 +70,8 @@
             this.splitContainer1.Panel1.Controls.Add(this.numericUpDown1);
             this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
-            this.splitContainer1.Size = new System.Drawing.Size(529, 356);
-            this.splitContainer1.SplitterDistance = 176;
+            this.splitContainer1.Size = new System.Drawing.Size(594, 536);
+            this.splitContainer1.SplitterDistance = 197;
             this.splitContainer1.TabIndex = 0;
             // 
             // button3
@@ -94,7 +96,7 @@
             this.numericUpDown6.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown6.TabIndex = 7;
             this.numericUpDown6.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
@@ -111,7 +113,7 @@
             this.numericUpDown5.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown5.TabIndex = 6;
             this.numericUpDown5.Value = new decimal(new int[] {
-            30,
+            70,
             0,
             0,
             0});
@@ -128,7 +130,7 @@
             this.numericUpDown4.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown4.TabIndex = 5;
             this.numericUpDown4.Value = new decimal(new int[] {
-            80,
+            100,
             0,
             0,
             0});
@@ -145,7 +147,7 @@
             this.numericUpDown3.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown3.TabIndex = 4;
             this.numericUpDown3.Value = new decimal(new int[] {
-            50,
+            30,
             0,
             0,
             0});
@@ -162,7 +164,7 @@
             this.numericUpDown2.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown2.TabIndex = 3;
             this.numericUpDown2.Value = new decimal(new int[] {
-            20,
+            50,
             0,
             0,
             0});
@@ -179,7 +181,7 @@
             this.numericUpDown1.Size = new System.Drawing.Size(161, 22);
             this.numericUpDown1.TabIndex = 2;
             this.numericUpDown1.Value = new decimal(new int[] {
-            20,
+            50,
             0,
             0,
             0});
@@ -210,15 +212,24 @@
             this.timer1.Interval = 30;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(12, 372);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(161, 22);
+            this.textBox1.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(529, 356);
+            this.ClientSize = new System.Drawing.Size(594, 536);
             this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown6)).EndInit();
@@ -244,6 +255,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

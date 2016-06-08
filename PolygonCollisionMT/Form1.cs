@@ -94,6 +94,19 @@ namespace PolygonCollisionMT
             pv += obstacleVec;
             PolygonMng.addPolygon(new Triangle(pv, velocity));
 
+            MyVector p1 = new MyVector(50, 50);
+            MyVector p2 = new MyVector(89, 100);
+            MyVector p3 = new MyVector(100, 100);
+            MyVector p4 = new MyVector(100, 67);
+            PointVector tetra = new PointVector();
+            tetra.Add(p1);
+            tetra.Add(p2);
+            tetra.Add(p3);
+            tetra.Add(p4);
+            Tetragon tetragon = new Tetragon(tetra);
+            PolygonMng.addPolygon(tetragon);
+
+
         }
 
         private void button3_Click(object sender, EventArgs e)

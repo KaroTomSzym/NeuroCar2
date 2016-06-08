@@ -7,14 +7,22 @@ using System.Drawing;
 
 namespace PolygonCollisionMT
 {
-    public class Triangle : Polygon
+    public class Tetragon : Polygon
     {
+        private List<Triangle> subTriangles;
 
         public override MyVector MassCentre
         {
             get
             {
-                return _points.GeometricCentre;
+                MyVector centrePoint = new MyVector(0, 0);
+
+                foreach (Triangle t in subTriangles)
+                {
+                    centrePoint += t.MassCentre * (1 / subTriangles.Count);
+                }
+
+                return centrePoint;
             }
         }
 
@@ -22,7 +30,12 @@ namespace PolygonCollisionMT
         {
             get
             {
-                return MyMath.triangleSurface(_points)*0.01;
+                double mass = 0;
+                foreach (Triangle t in subTriangles)
+                {
+                    mass += t.Mass;
+                }
+                return mass;
             }
         }
 
@@ -33,26 +46,21 @@ namespace PolygonCollisionMT
                 return _points.Length;
             }
         }
-
-        public Triangle(PointVector pv, MyVector velocity)
+        
+        public Tetragon(PointVector pv)
         {
-            this._points = pv;
-            this._velocity = velocity;
-            this._angularVelocity = 0.0;
-        }
-
-        public Triangle(MyVector vertexA, MyVector vertexB, MyVector vertexC)
-        {
-            PointVector pv = new PointVector();
-            pv.Add(vertexA);
-            pv.Add(vertexB);
-            pv.Add(vertexC);
-            MyVector velocity = new MyVector(0, 0);
-
-            _velocity = velocity;
+            if (pv.Length != 4)
+                throw new RankException();
             _points = pv;
+            _velocity = new MyVector(0, 0);
             _angularVelocity = 0;
 
+            Triangle t1 = new Triangle(pv[0], pv[1], pv[2]);
+            Triangle t2 = new Triangle(pv[1], pv[2], pv[3]);
+
+            subTriangles = new List<Triangle>();
+            subTriangles.Add(t1);
+            subTriangles.Add(t2);
         }
 
         public override Point[] getPointsTable()
@@ -110,16 +118,17 @@ namespace PolygonCollisionMT
 
         public override bool isPointInside(MyVector point)
         {
-            double controlSurface = MyMath.triangleSurface(_points);
-
             MyVector nextPoint = point + _velocity;
-            double splitedSurface = MyMath.splitedTriangleSurface(_points, nextPoint);
 
-            if (controlSurface == splitedSurface)
-                return true;
-            else
-                return false;
+            foreach (Triangle t in subTriangles)
+            {
+                if (t.isPointInside(nextPoint))
+                {
+                    return true;
+                }
+            }
 
+            return false;
         }
 
         public override MyVector polygonCollision(Polygon polygon)
@@ -148,10 +157,10 @@ namespace PolygonCollisionMT
                     if (isPointInside(polygon[i]))
                     {
                         return polygon[i];
-                    }                
+                    }
                 }
             }
-            
+
             MyVector noCollison = new MyVector(-1, -1);
             return noCollison;
         }
@@ -165,30 +174,30 @@ namespace PolygonCollisionMT
 
             forceVector = (forceVector + angularVector) * Mass;
 
-            return _velocity*Mass;
+            return _velocity * Mass;
         }
 
         public override void actForce(MyVector contactPoint, MyVector forceVector)
         {
             MyVector massRadius = MassCentre - contactPoint;
             MyVector rotationVec = MyMath.normalVector(massRadius);
-            double rotationRadius = MyMath.normVector(rotationVec)/100;
+            double rotationRadius = MyMath.normVector(rotationVec) / 100;
 
             massRadius = MyMath.normalizeVector(massRadius);
             rotationVec = MyMath.normalizeVector(rotationVec);
 
             double rotationOrientation = Math.Sign(MyMath.orientationBetweenVectors(massRadius, _velocity));
 
-            _velocity = forceVector*(1/Mass);
-            _angularVelocity = rotationRadius*0.09 * MyMath.dotProduct(rotationVec, forceVector) / Mass;
+            _velocity = forceVector * (1 / Mass);
+            _angularVelocity = rotationRadius * 0.09 * MyMath.dotProduct(rotationVec, forceVector) / Mass;
             _angularVelocity = Math.Abs(_angularVelocity);
             _angularVelocity *= -rotationOrientation;
-            
+
         }
 
         public override void forward(MyVector velocity)
         {
-            _velocity += velocity*10;
+            _velocity += velocity * 10;
             _points += velocity;
         }
     }

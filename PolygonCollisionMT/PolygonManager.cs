@@ -112,6 +112,7 @@ namespace PolygonCollisionMT
                     Double forceValue = MyMath.normVector(force);
                     force =  MyMath.normalizeVector(force+massCentre) * forceValue;
                     carPolygon.actForce(contactPoint, force);
+                    //p.actForce(contactPoint, force*-1);
                 }
                 else
                 {
@@ -123,6 +124,7 @@ namespace PolygonCollisionMT
                         Double forceValue = MyMath.normVector(force);
                         force = MyMath.normalizeVector(force + massCentre) * forceValue;
                         carPolygon.actForce(contactPoint2, force);
+                        //p.actForce(contactPoint2, force * -1);
                     }
                 }
             }

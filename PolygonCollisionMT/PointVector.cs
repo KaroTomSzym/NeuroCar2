@@ -32,7 +32,7 @@ namespace PolygonCollisionMT
             get
             {
                 MyVector tempMv = new MyVector();
-                for(int i = 0 ; i < PointDimension ; i ++)
+                for (int i = 0; i < PointDimension; i++)
                 {
                     tempMv.Add(0);
                 }
@@ -48,6 +48,14 @@ namespace PolygonCollisionMT
         public PointVector()
         {
             _points = new List<MyVector>();
+        }
+
+        public PointVector(MyVector a, MyVector b, MyVector c)
+        {
+            _points = new List<MyVector>();
+            _points.Add(a);
+            _points.Add(b);
+            _points.Add(c);
         }
 
         public MyVector this[int index]
@@ -73,7 +81,43 @@ namespace PolygonCollisionMT
             return pt;
         }
 
-        public static PointVector operator+(PointVector pv, MyVector mv)
+        public MyVector maxCoordinatePoint(int dimensionIndex)
+        {
+            if (dimensionIndex >= PointDimension)
+                throw new IndexOutOfRangeException();
+
+            double max = _points[0][dimensionIndex];
+            int index = 0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (max < _points[i][dimensionIndex])
+                {
+                    max = _points[i][dimensionIndex];
+                    index = i;
+                }
+            }
+            return _points[index];
+        }
+
+        public MyVector minCoordinatePoint(int dimensionIndex)
+        {
+            if (dimensionIndex >= PointDimension)
+                throw new IndexOutOfRangeException();
+
+            double min = _points[0][dimensionIndex];
+            int index = 0;
+            for (int i = 1; i < Length; i++)
+            {
+                if (min > _points[i][dimensionIndex])
+                {
+                    min = _points[i][dimensionIndex];
+                    index = i;
+                }
+            }
+            return _points[index];
+        }
+
+        public static PointVector operator +(PointVector pv, MyVector mv)
         {
             if (pv.PointDimension != mv.Length)
                 throw new Exception();
@@ -92,6 +136,57 @@ namespace PolygonCollisionMT
 
             return tempPv;
 
+        }
+
+        public static PointVector operator -(PointVector pv, MyVector mv)
+        {
+            if (pv.PointDimension != mv.Length)
+                throw new Exception();
+
+            PointVector tempPv = new PointVector();
+
+            for (int i = 0; i < pv.Length; i++)
+            {
+                MyVector tempMv = new MyVector();
+                for (int j = 0; j < pv.PointDimension; j++)
+                {
+                    tempMv.Add(pv[i][j] - mv[j]);
+                }
+                tempPv.Add(tempMv);
+            }
+
+            return tempPv;
+
+        }
+
+        private PointVector polarRepresentation(MyVector centre)
+        {
+            PointVector coordsRelativeToCenter = this - centre;
+            PointVector polarCoords = new PointVector();
+            for (int i = 0; i < this.Length; i++)
+            {
+                polarCoords.Add(MyMath.polarRepresentation(coordsRelativeToCenter[i]));
+            }
+            return polarCoords;
+        }
+
+        public PointVector rotate(double angle, MyVector rotationCentre)
+        {
+            PointVector polarRepresentation = this.polarRepresentation(rotationCentre);
+            for (int i = 0; i < polarRepresentation.Length; i++)
+            {
+                polarRepresentation[i][1] += angle;
+                polarRepresentation[i][1] %= 2 * Math.PI;
+            }
+
+            PointVector cartesianRepresentation = new PointVector();
+            for (int i = 0; i < polarRepresentation.Length; i++)
+            {
+                MyVector cartesianPoint = MyMath.cartesianRepresentation(polarRepresentation[i], rotationCentre);
+                cartesianRepresentation.Add(cartesianPoint);
+            }
+
+            return cartesianRepresentation;
         }
 
     }

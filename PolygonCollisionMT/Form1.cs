@@ -95,9 +95,9 @@ namespace PolygonCollisionMT
             PolygonMng.addPolygon(new Triangle(pv, velocity));
 
             MyVector p1 = new MyVector(50, 50);
-            MyVector p2 = new MyVector(89, 100);
-            MyVector p3 = new MyVector(100, 100);
-            MyVector p4 = new MyVector(100, 67);
+            MyVector p2 = new MyVector(89, 110);
+            MyVector p3 = new MyVector(120, 100);
+            MyVector p4 = new MyVector(100, 57);
             PointVector tetra = new PointVector();
             tetra.Add(p1);
             tetra.Add(p2);
